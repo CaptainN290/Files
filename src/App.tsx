@@ -166,14 +166,22 @@ const App: React.FC = () => {
   };
 
   return (
-      <header className="header">
+    <div className="app-container" tabIndex={0} onKeyDown={handleKeyDown}>
+      <header 
+        className="header" 
+        style={{ cursor: view !== 'root' && view !== 'search' ? 'pointer' : 'default' }}
+        onClick={() => view !== 'search' && handleBack()}
+      >
         <div className="branding">
-          <img src="/logo.PNG" alt="Faultfiles Logo" className="logo" />
+          <img src="/logo.PNG" alt="FaultFiles Logo" className="logo" />
           <div>
             <h1 className="title">FAULTFILES</h1>
             <div className="subtitle">CENTRAL INFORMATION SYSTEM // CLEARANCE: 1</div>
           </div>
         </div>
+        {view !== 'root' && view !== 'search' && (
+          <div className="back-hint">↑ BACK</div>
+        )}
       </header>
 
       <main className="content">
@@ -182,11 +190,15 @@ const App: React.FC = () => {
 
       <footer className="footer">
         <div>STATUS: CONNECTED | FILES: {allFiles.length}</div>
-        <div>
-          {view === 'root' && '[↑↓] MOVE [→/ENTER] OPEN [/] SEARCH'}
-          {view === 'folder' && '[↑↓] MOVE [→/ENTER] OPEN [←/ESC] BACK'}
-          {view === 'file' && '[←/ESC] BACK'}
-          {view === 'search' && '[TYPE] QUERY [ENTER] OPEN [ESC] BACK'}
+        <div className="footer-controls">
+          {view === 'root' && <span className="mobile-only">TAP TO OPEN</span>}
+          {view === 'root' && <span className="desktop-only">[↑↓] MOVE [→/ENTER] OPEN [/] SEARCH</span>}
+          {view === 'folder' && <span className="mobile-only">TAP TO OPEN</span>}
+          {view === 'folder' && <span className="desktop-only">[↑↓] MOVE [→/ENTER] OPEN [←/ESC] BACK</span>}
+          {view === 'file' && <span className="mobile-only">TAP HEADER TO GO BACK</span>}
+          {view === 'file' && <span className="desktop-only">[←/ESC] BACK</span>}
+          {view === 'search' && <span className="mobile-only">TYPE TO SEARCH</span>}
+          {view === 'search' && <span className="desktop-only">[TYPE] QUERY [ENTER] OPEN [ESC] BACK</span>}
         </div>
       </footer>
     </div>
